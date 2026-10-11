@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Ezzzzz</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="page-layout">
+
+    <header id="main-header">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom px-sm-2">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="Ezzzzz Digital Art Store logo" class="logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item me-lg-2"><button type="button" id="color-btn" class="btn btn-outline-secondary btn-sm">Dark Mode</button></li>
+              <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+              <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="artists.html">Artists</a></li>
+              <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+              <li class="nav-item"><a class="nav-link active" aria-current="page" href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <aside id="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li><a href="index.html">Home Page</a></li>
+        <li><a href="gallery.html">All Artworks</a></li>
+        <li><a href="about.html">Information</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="artists.html">Featured Artists</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </aside>
+
+    <main class="container">
+
+      <h1>Contact Us</h1>
+      <p>Have a question about an artwork or want to request a custom commission? Send us a message below.</p>
+
+      <ul>
+        <li>Email: hello@ezzzzz.example</li>
+        <li>Response time: within 2 business days</li>
+        <li>Custom commissions: quoted individually</li>
+      </ul>
+
+      <section class="section py-lg-4">
+        <form id="contact-form" class="p-3 bg-light border rounded" action="#" method="post" novalidate>
+          <h2>Send a Message</h2>
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
+            <div class="error-text" id="name-error"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="input-group">
+              <span class="input-group-text">@</span>
+              <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="error-text" id="email-error"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="At least 8 characters" required>
+            <div class="error-text" id="password-error"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="confirm-password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="Repeat your password" required>
+            <div class="error-text" id="confirm-error"></div>
+          </div>
+
+          <div class="mb-3">
+            <label for="topic" class="form-label">Topic</label>
+            <select class="form-select" id="topic" name="topic">
+              <option value="order">Order Question</option>
+              <option value="commission">Custom Commission</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="favcolor" class="form-label">Favorite Color (for a free sticker)</label>
+            <input type="color" class="form-control form-control-color" id="favcolor" name="favcolor" value="#8a4fff">
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+            <div class="error-text" id="message-error"></div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+            <label class="form-check-label" for="newsletter">Send me occasional updates about new artwork</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <div class="success-text" id="form-success"></div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer id="site-footer">
+      <p>Team: Dinmukhammed &middot; Yerketay &middot; Aldiyar | Group SE 2513</p>
+      <p>&copy; 2026 Ezzzzz Digital Art Store</p>
+    </footer>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
