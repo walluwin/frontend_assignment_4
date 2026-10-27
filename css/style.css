@@ -520,3 +520,60 @@ body.dark-mode .error-text {
 body.dark-mode .success-text {
   color: #7be0a0;
 }
+
+
+/* Assignment 5: interactive gallery features */
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.filter-artwork {
+  animation: artwork-appear 0.35s ease both;
+}
+.rating-stars {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+.star {
+  border: 0;
+  background: transparent;
+  color: #9a9a9a;
+  font-size: 1.7rem;
+  line-height: 1;
+  padding: 0.1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.star:hover,
+.star:focus-visible {
+  transform: scale(1.2);
+}
+.star.selected {
+  color: #f4b400;
+}
+.rating-message {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+}
+.filter-artwork.is-hidden {
+  display: none;
+}
+#gallery-feedback {
+  min-height: 1.5rem;
+}
+.keyboard-focus {
+  outline: 3px solid #8a4fff !important;
+  outline-offset: 3px;
+}
+@keyframes artwork-appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
