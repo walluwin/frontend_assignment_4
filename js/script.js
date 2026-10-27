@@ -144,3 +144,162 @@ if (datetime) {
   showDateTime();
   setInterval(showDateTime, 1000);
 }
+
+
+/* Assignment 5: keyboard navigation for the main navigation menu */
+var navigationLinks = document.querySelectorAll("#mainNav .nav-link");
+navigationLinks.forEach(function (link, index) {
+  link.addEventListener("keydown", function (event) {
+    var nextIndex = index;
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      nextIndex = (index + 1) % navigationLinks.length;
+    } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      nextIndex = (index - 1 + navigationLinks.length) % navigationLinks.length;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    navigationLinks[nextIndex].focus();
+  });
+});
+
+/* Assignment 5: switch statement filters artwork by category */
+var filterButtons = document.querySelectorAll("[data-filter]");
+var artworkCards = document.querySelectorAll(".filter-artwork");
+var galleryFeedback = document.getElementById("gallery-feedback");
+
+function filterArtworks(category) {
+  artworkCards.forEach(function (card) {
+    var shouldShow;
+    switch (category) {
+      case "fantasy":
+        shouldShow = card.dataset.category === "fantasy";
+        break;
+      case "character":
+        shouldShow = card.dataset.category === "character";
+        break;
+      case "abstract":
+        shouldShow = card.dataset.category === "abstract";
+        break;
+      default:
+        shouldShow = true;
+    }
+    card.classList.toggle("is-hidden", !shouldShow);
+  });
+  if (galleryFeedback) {
+    galleryFeedback.textContent = category === "all"
+      ? "Showing all artworks."
+      : "Showing " + category + " artwork.";
+  }
+}
+
+filterButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    filterButtons.forEach(function (item) { item.classList.remove("active"); });
+    button.classList.add("active");
+    filterArtworks(button.dataset.filter);
+    playUiSound();
+  });
+});
+
+/* Assignment 5: save star ratings in localStorage */
+document.querySelectorAll(".rating-stars").forEach(function (ratingGroup) {
+  var artworkName = ratingGroup.dataset.artwork;
+  var savedRating = Number(localStorage.getItem("rating-" + artworkName)) || 0;
+  var stars = ratingGroup.querySelectorAll(".star");
+  var message = ratingGroup.parentElement.querySelector(".rating-message");
+
+  function paintStars(rating) {
+    stars.forEach(function (star) {
+      star.classList.toggle("selected", Number(star.dataset.rating) <= rating);
+    });
+  }
+  paintStars(savedRating);
+  if (savedRating && message) message.textContent = "Your rating: " + savedRating + "/5";
+
+  stars.forEach(function (star) {
+    star.addEventListener("click", function () {
+      var rating = Number(star.dataset.rating);
+      localStorage.setItem("rating-" + artworkName, rating);
+      paintStars(rating);
+      if (message) message.textContent = "Your rating: " + rating + "/5 — thank you!";
+      playUiSound();
+    });
+  });
+});
+
+/* Assignment 5: artwork objects, array, loop, and map() higher-order function */
+var extraArtworks = [
+  { title: "City Facade", category: "architecture", image: "images/gallery4.jpg", description: "A modern city-inspired digital artwork." },
+  { title: "Color Study", category: "abstract", image: "images/gallery5.jpg", description: "A colorful study of shape and texture." },
+  { title: "Collage Wall", category: "abstract", image: "images/gallery6.jpeg", description: "A bright digital collage." }
+];
+
+var loadArtworkButton = document.getElementById("load-artwork-btn");
+if (loadArtworkButton) {
+  loadArtworkButton.addEventListener("click", function () {
+    var container = document.getElementById("filterable-artworks");
+    var newCards = extraArtworks.map(function (artwork) {
+      var card = document.createElement("article");
+      card.className = "card filter-artwork";
+      card.dataset.category = artwork.category === "architecture" ? "fantasy" : artwork.category;
+      var image = document.createElement("img");
+      image.src = artwork.image;
+      image.alt = artwork.title;
+      var title = document.createElement("h3");
+      title.textContent = artwork.title;
+      var description = document.createElement("p");
+      description.textContent = artwork.description;
+      card.append(image, title, description);
+      return card;
+    });
+    newCards.forEach(function (card) { container.appendChild(card); });
+    artworkCards = document.querySelectorAll(".filter-artwork");
+    loadArtworkButton.disabled = true;
+    loadArtworkButton.textContent = "All Artworks Loaded";
+    if (galleryFeedback) galleryFeedback.textContent = "Three more artworks have been added to the gallery.";
+    playUiSound();
+  });
+}
+
+/* Assignment 5: short sound effect using the browser's Web Audio API */
+function playUiSound() {
+  try {
+    var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    var audioContext = new AudioContextClass();
+    var oscillator = audioContext.createOscillator();
+    var gain = audioContext.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.value = 660;
+    gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.12);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.12);
+    oscillator.onended = function () { audioContext.close(); };
+  } catch (error) {
+    // The gallery remains usable if sound is not supported by the browser.
+  }
+}
+
+var soundButton = document.getElementById("sound-btn");
+if (soundButton) {
+  soundButton.addEventListener("click", function () {
+    playUiSound();
+    soundButton.textContent = "Sound played ✓";
+  });
+}
+
+/* Assignment 5: event-triggered animation for gallery cards */
+document.querySelectorAll(".filter-artwork").forEach(function (card) {
+  card.addEventListener("click", function (event) {
+    if (event.target.closest(".rating-stars")) return;
+    card.classList.remove("keyboard-focus");
+    card.animate(
+      [{ transform: "scale(1)" }, { transform: "scale(1.025)" }, { transform: "scale(1)" }],
+      { duration: 300, easing: "ease-out" }
+    );
+  });
+});
