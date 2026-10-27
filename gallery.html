@@ -131,6 +131,49 @@
         </div>
       </section>
 
+      <section class="section interactive-gallery">
+        <h2>Explore Artworks</h2>
+        <p>Filter the collection and rate your favorite piece.</p>
+        <button type="button" id="sound-btn" class="btn btn-outline-secondary btn-sm mb-3">Play a gallery sound ♪</button>
+        <div class="filter-controls mb-3" role="group" aria-label="Filter artworks by category">
+          <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
+          <button type="button" class="btn btn-outline-primary" data-filter="fantasy">Fantasy</button>
+          <button type="button" class="btn btn-outline-primary" data-filter="character">Character</button>
+          <button type="button" class="btn btn-outline-primary" data-filter="abstract">Abstract</button>
+        </div>
+        <div class="card-grid" id="filterable-artworks">
+          <article class="card filter-artwork" data-category="fantasy">
+            <img src="images/gallery1.jpg" alt="Fantasy landscape at sunset">
+            <h3>Sunset Ridge</h3><p>Fantasy landscape by Luna Ray.</p>
+            <div class="rating" aria-label="Rate Sunset Ridge">
+              <span class="rating-stars" data-artwork="Sunset Ridge">
+                <button type="button" class="star" data-rating="1" aria-label="Rate 1 out of 5">★</button><button type="button" class="star" data-rating="2" aria-label="Rate 2 out of 5">★</button><button type="button" class="star" data-rating="3" aria-label="Rate 3 out of 5">★</button><button type="button" class="star" data-rating="4" aria-label="Rate 4 out of 5">★</button><button type="button" class="star" data-rating="5" aria-label="Rate 5 out of 5">★</button>
+              </span><p class="rating-message" aria-live="polite">Choose a rating</p>
+            </div>
+          </article>
+          <article class="card filter-artwork" data-category="character">
+            <img src="images/gallery2.jpg" alt="Neon character portrait">
+            <h3>Neon Drifter</h3><p>Character concept art.</p>
+            <div class="rating" aria-label="Rate Neon Drifter">
+              <span class="rating-stars" data-artwork="Neon Drifter">
+                <button type="button" class="star" data-rating="1" aria-label="Rate 1 out of 5">★</button><button type="button" class="star" data-rating="2" aria-label="Rate 2 out of 5">★</button><button type="button" class="star" data-rating="3" aria-label="Rate 3 out of 5">★</button><button type="button" class="star" data-rating="4" aria-label="Rate 4 out of 5">★</button><button type="button" class="star" data-rating="5" aria-label="Rate 5 out of 5">★</button>
+              </span><p class="rating-message" aria-live="polite">Choose a rating</p>
+            </div>
+          </article>
+          <article class="card filter-artwork" data-category="abstract">
+            <img src="images/gallery3.jpg" alt="Abstract digital composition">
+            <h3>Fragments</h3><p>Abstract limited-edition artwork.</p>
+            <div class="rating" aria-label="Rate Fragments">
+              <span class="rating-stars" data-artwork="Fragments">
+                <button type="button" class="star" data-rating="1" aria-label="Rate 1 out of 5">★</button><button type="button" class="star" data-rating="2" aria-label="Rate 2 out of 5">★</button><button type="button" class="star" data-rating="3" aria-label="Rate 3 out of 5">★</button><button type="button" class="star" data-rating="4" aria-label="Rate 4 out of 5">★</button><button type="button" class="star" data-rating="5" aria-label="Rate 5 out of 5">★</button>
+              </span><p class="rating-message" aria-live="polite">Choose a rating</p>
+            </div>
+          </article>
+        </div>
+        <button type="button" id="load-artwork-btn" class="btn btn-primary mt-3">Show More Artworks</button>
+        <p id="gallery-feedback" class="success-text" aria-live="polite"></p>
+      </section>
+
       <section class="section">
         <h2>All Artworks</h2>
         <div class="gallery-grid">
