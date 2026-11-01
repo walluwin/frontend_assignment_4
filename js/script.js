@@ -54,8 +54,7 @@ if (contactForm) {
     }
 
     if (isValid) {
-      document.getElementById("form-success").textContent = "Your message has been sent successfully!";
-      contactForm.reset();
+      contactForm.dispatchEvent(new Event("valid-submit"));
     }
   });
 }
@@ -302,4 +301,233 @@ document.querySelectorAll(".filter-artwork").forEach(function (card) {
       { duration: 300, easing: "ease-out" }
     );
   });
+});
+
+
+/* Assignment 6: jQuery */
+$(document).ready(function () {
+  console.log("jQuery is ready!");
+
+  /* Task 7: toast notifications */
+  $("body").append('<div id="toast-container"></div>');
+
+  function showToast(message) {
+    var $toast = $('<div class="site-toast"></div>').text(message);
+    $("#toast-container").append($toast);
+    $toast.hide().fadeIn(300).delay(2500).fadeOut(500, function () {
+      $(this).remove();
+    });
+  }
+
+  $("#subscribe-form").on("submit", function () {
+    showToast("Subscribed successfully!");
+  });
+
+  $(document).on("click", ".star", function () {
+    var name = $(this).closest(".rating-stars").data("artwork");
+    showToast("You rated " + name + " " + $(this).data("rating") + "/5");
+  });
+
+  $("#load-artwork-btn").on("click", function () {
+    showToast("3 more artworks added");
+  });
+
+  /* Task 1: live search filter */
+  function applySearch() {
+    var query = $("#artwork-search").val().toLowerCase().trim();
+    var $cards = $(".filter-artwork");
+    var $matches = $cards.filter(function () {
+      var text = $(this).find("h3").text() + " " + $(this).children("p").text();
+      return text.toLowerCase().indexOf(query) > -1;
+    });
+    $cards.addClass("search-hidden");
+    $matches.removeClass("search-hidden");
+    $("#search-empty").toggle($matches.length === 0);
+  }
+
+  $("#artwork-search").on("input", applySearch);
+  $("#load-artwork-btn").on("click", applySearch);
+
+  /* Task 2: autocomplete suggestions */
+  var artworkNames = [
+    "Sunset Ridge", "Neon Drifter", "Fragments",
+    "City Facade", "Color Study", "Collage Wall",
+    "Luna Ray", "Kenji Voss", "Mira Solis"
+  ];
+
+  $("#artwork-search").on("input", function () {
+    var query = $(this).val().toLowerCase().trim();
+    var $list = $("#suggestions").empty();
+    if (query === "") {
+      $list.hide();
+      return;
+    }
+    var found = $.grep(artworkNames, function (name) {
+      return name.toLowerCase().indexOf(query) > -1;
+    });
+    $.each(found, function (index, name) {
+      $list.append($("<li></li>").text(name));
+    });
+    $list.toggle(found.length > 0);
+  });
+
+  $("#suggestions").on("click", "li", function () {
+    $("#artwork-search").val($(this).text());
+    $("#suggestions").hide();
+    applySearch();
+  });
+
+  $(document).on("click", function (event) {
+    if (!$(event.target).closest(".search-wrap").length) {
+      $("#suggestions").hide();
+    }
+  });
+
+  /* Task 3: search highlighting */
+  var $searchTexts = $(".faq-question, .faq-answer p, .included-list li");
+
+  $searchTexts.each(function () {
+    $(this).data("original", $(this).html());
+  });
+
+  $("#page-search").on("input", function () {
+    var query = $(this).val().trim();
+    var total = 0;
+
+    $searchTexts.each(function () {
+      $(this).html($(this).data("original"));
+    });
+    $(".faq-question").removeClass("active");
+    $(".faq-answer").css("max-height", "");
+
+    if (query === "") {
+      $("#search-count").text("");
+      return;
+    }
+
+    var safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    var regex = new RegExp("(" + safeQuery + ")", "gi");
+
+    $searchTexts.each(function () {
+      var text = $(this).text();
+      var matches = text.match(regex);
+      if (matches) {
+        total += matches.length;
+        $(this).html(text.replace(regex, '<mark class="search-mark">$1</mark>'));
+      }
+    });
+
+    $(".faq-item").has("mark").each(function () {
+      var $answer = $(this).find(".faq-answer");
+      $(this).find(".faq-question").addClass("active");
+      $answer.css("max-height", $answer.prop("scrollHeight") + "px");
+    });
+
+    $("#search-count").text(total + " match(es) found");
+  });
+
+  /* Task 4: scroll progress bar */
+  $("body").prepend(
+    '<div id="scroll-progress"><div id="scroll-progress-bar"></div></div>' +
+    '<span id="scroll-progress-label">0%</span>'
+  );
+
+  function updateProgress() {
+    var maxScroll = $(document).height() - $(window).height();
+    var percent = maxScroll > 0 ? Math.round($(window).scrollTop() / maxScroll * 100) : 0;
+    $("#scroll-progress-bar").css("width", percent + "%");
+    $("#scroll-progress-label").text(percent + "%");
+  }
+
+  $(window).on("scroll resize", updateProgress);
+  updateProgress();
+
+  /* Task 5: animated number counter */
+  var countersStarted = false;
+
+  function startCounters() {
+    var $stats = $("#stats");
+    if (countersStarted || !$stats.length) return;
+    if ($(window).scrollTop() + $(window).height() < $stats.offset().top + 50) return;
+    countersStarted = true;
+
+    $(".stat-number").each(function () {
+      var $number = $(this);
+      var target = $number.data("target");
+      var suffix = $number.data("suffix") || "";
+      $({ value: 0 }).animate({ value: target }, {
+        duration: 2000,
+        step: function (now) {
+          $number.text(Math.floor(now) + suffix);
+        },
+        complete: function () {
+          $number.text(target + suffix);
+        }
+      });
+    });
+  }
+
+  $(window).on("scroll resize", startCounters);
+  startCounters();
+
+  /* Task 6: loading spinner on submit */
+  $("#contact-form").on("valid-submit", function () {
+    var form = this;
+    var $button = $(form).find("button[type='submit']");
+    var originalText = $button.text();
+
+    $button.prop("disabled", true).html(
+      '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Please wait…'
+    );
+
+    setTimeout(function () {
+      $button.prop("disabled", false).text(originalText);
+      $("#form-success").text("Your message has been sent successfully!");
+      form.reset();
+      showToast("Form submitted successfully!");
+    }, 2000);
+  });
+
+  /* Task 8: copy to clipboard */
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    var $temp = $("<textarea></textarea>").val(text).appendTo("body");
+    $temp[0].select();
+    document.execCommand("copy");
+    $temp.remove();
+    return Promise.resolve();
+  }
+
+  $(".copy-btn").on("click", function () {
+    var $button = $(this);
+    copyText($button.data("copy")).then(function () {
+      $button.find(".copy-icon").text("✔");
+      $button.siblings(".copy-tooltip").stop(true, true).fadeIn(150).delay(1500).fadeOut(300);
+      showToast("Copied to clipboard!");
+      setTimeout(function () {
+        $button.find(".copy-icon").text("📋");
+      }, 2000);
+    });
+  });
+
+  $(".copy-text").on("copy", function () {
+    showToast("Copied to clipboard!");
+  });
+
+  /* Task 9: image lazy loading */
+  function loadVisibleImages() {
+    var viewBottom = $(window).scrollTop() + $(window).height();
+    $("img.lazy").each(function () {
+      var $image = $(this);
+      if ($image.offset().top < viewBottom + 100) {
+        $image.attr("src", $image.data("src")).removeClass("lazy").addClass("lazy-loaded");
+        console.log("Lazy loaded: " + $image.data("src"));
+      }
+    });
+  }
+
+  $(window).on("scroll resize load", loadVisibleImages);
+  loadVisibleImages();
 });
