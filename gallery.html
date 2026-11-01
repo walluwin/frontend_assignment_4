@@ -6,6 +6,7 @@
   <title>Gallery | Ezzzzz</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
 </head>
 <body>
 
@@ -134,6 +135,11 @@
       <section class="section interactive-gallery">
         <h2>Explore Artworks</h2>
         <p>Filter the collection and rate your favorite piece.</p>
+        <div class="search-wrap mb-3">
+          <input type="text" id="artwork-search" class="form-control" placeholder="Search artworks..." autocomplete="off">
+          <ul id="suggestions" class="suggestions-list"></ul>
+        </div>
+        <p id="search-empty" class="error-text" style="display:none;">No artworks found.</p>
         <button type="button" id="sound-btn" class="btn btn-outline-secondary btn-sm mb-3">Play a gallery sound ♪</button>
         <div class="filter-controls mb-3" role="group" aria-label="Filter artworks by category">
           <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
@@ -178,39 +184,39 @@
         <h2>All Artworks</h2>
         <div class="gallery-grid">
           <figure class="gallery-item">
-            <img src="images/gallery1.jpg" alt="Digital painting of a fantasy landscape at sunset">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery1.jpg" alt="Digital painting of a fantasy landscape at sunset">
             <figcaption>Sunset Ridge</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/artist2.jpg" alt="Detail of a tall iron tower artwork">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/artist2.jpg" alt="Detail of a tall iron tower artwork">
             <figcaption>Iron Tower</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/gallery3.jpg" alt="Abstract digital composition with geometric shapes">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery3.jpg" alt="Abstract digital composition with geometric shapes">
             <figcaption>Fragments</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/artist1.jpg" alt="Sample artwork by Luna Ray">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/artist1.jpg" alt="Sample artwork by Luna Ray">
             <figcaption>Luna Ray</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/gallery2.jpg" alt="Digital character portrait with neon lighting">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery2.jpg" alt="Digital character portrait with neon lighting">
             <figcaption>Neon Drifter</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/artist3.jpg" alt="Sample artwork by Mira Solis">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/artist3.jpg" alt="Sample artwork by Mira Solis">
             <figcaption>Mira Solis</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/gallery4.jpg" alt="Detail of a city building artwork">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery4.jpg" alt="Detail of a city building artwork">
             <figcaption>City Facade</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/gallery5.jpg" alt="Sample artwork by Kenji Voss">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery5.jpg" alt="Sample artwork by Kenji Voss">
             <figcaption>Kenji Voss</figcaption>
           </figure>
           <figure class="gallery-item">
-            <img src="images/gallery6.jpeg" alt="Colorful digital artwork collage on display">
+            <img class="lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="images/gallery6.jpeg" alt="Colorful digital artwork collage on display">
             <figcaption>Collage Wall</figcaption>
           </figure>
         </div>
